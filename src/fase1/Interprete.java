@@ -4,12 +4,18 @@ import java.util.ArrayList;
 
 public class Interprete {
 	String nombre;
-	ArrayList<Pelicula> peliculas;
+	//ArrayList<Pelicula> peliculas;
+	ListaPeliculas peliculas;
 	
-	public Interprete(String nombre, ArrayList<Pelicula> peliculas) {
+	public Interprete(String nombre, ListaPeliculas peliculas) {
 		super();
 		this.nombre = nombre;
 		this.peliculas = peliculas;
+	}
+	public Interprete(String nombre) {
+		super();
+		this.nombre = nombre;
+		this.peliculas = new ListaPeliculas();
 	}
 
 
@@ -21,11 +27,11 @@ public class Interprete {
 		this.nombre = nombre;
 	}
 
-	public ArrayList<Pelicula> getPeliculas() {
+	public ListaPeliculas getPeliculas() {
 		return peliculas;
 	}
 
-	public void setPeliculas(ArrayList<Pelicula> peliculas) {
+	public void setPeliculas(ListaPeliculas peliculas) {
 		this.peliculas = peliculas;
 	}
 	
@@ -33,7 +39,7 @@ public class Interprete {
 	{
 		float rating = 0.0f;
 		int invalidFilms = 0;
-		for (Pelicula p : getPeliculas())
+		for (Pelicula p : getPeliculas().getPeliculas())
 		{
 			if (p.getRating() >= 0) // detect if the film has valid rating
 			{
@@ -43,9 +49,9 @@ public class Interprete {
 			{
 				invalidFilms++;
 			}
-			if ((getPeliculas().size() - invalidFilms) != 0) // n/0 is not posible...
+			if ((getPeliculas().getPeliculas().size() - invalidFilms) != 0) // n/0 is not posible...
 			{
-				return rating / (getPeliculas().size() - invalidFilms);
+				return rating / (getPeliculas().getPeliculas().size() - invalidFilms);
 			}
 			else
 			{
@@ -57,9 +63,9 @@ public class Interprete {
 		return rating; 
 	}
 	
-	public void addPelicula(Pelicula pel) // anadirPelicula //DUDA estas pelis tienen que estar en orden alfabético??
+	public void anadirPelicula(Pelicula pel) // anadirPelicula //DUDA estas pelis tienen que estar en orden alfabético??
 	{
-		this.peliculas.add(pel);
+		this.peliculas.getPeliculas().add(pel);
 	}
 	
 	public void print()
@@ -67,14 +73,21 @@ public class Interprete {
 		System.out.println(getNombre());
 		System.out.println("=============================");
 		System.out.println("Rating ----> " + calcularRating());
-		System.out.println("Total de películas del intérprete: --> " + getPeliculas().size());
-		for (int i = 0; i < getPeliculas().size(); i++)
+		System.out.println("Total de películas del intérprete: --> " + getPeliculas().getPeliculas().size());
+		for (int i = 0; i < getPeliculas().getPeliculas().size(); i++)
 		{
-			System.out.println("* " + this.peliculas.get(i));
+			System.out.println(this.peliculas.getPeliculas().get(i));
 		}
 		
 		
 		System.out.println("\n\n");
 		
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getNombre();
+	}
 }
+
+

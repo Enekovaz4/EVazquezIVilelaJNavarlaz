@@ -16,6 +16,11 @@ public class ListaInterpretes {
 		this.interpretes = casts;
 	}
 
+	public ListaInterpretes() {
+		super();
+		this.interpretes = new ArrayList<Interprete>();
+	}
+	
 	public ArrayList<Interprete> getInterpretes() {
 		return interpretes;
 	}
@@ -60,7 +65,7 @@ public class ListaInterpretes {
 		return "Lista de Intérpretes :: " + this.interpretes.size();
 	}
 	
-	public void addInterprete(Interprete i)  //anadirInterprete
+	public void AnadirInterprete(Interprete i)  //anadirInterprete
 	{
 		this.interpretes.add(i);
 		

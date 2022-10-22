@@ -12,13 +12,14 @@ ListaPeliculas listaPeliculas;
 ListaInterpretes listaInterpretes;
 public CatalogoIMDB(String filename) {
 	super();
-	this.listaPeliculas =  new ListaPeliculas(cargarPeliculas(filename));
-	this.listaInterpretes = new ListaInterpretes(cargarInterpretes(this.listaPeliculas));
+	cargarPeliculas(filename);
+	//this.listaInterpretes = new ListaInterpretes(cargarInterpretes(this.listaPeliculas));
+	cargarInterpretes(this.listaPeliculas);
 }
 
-private ArrayList<Pelicula> cargarPeliculas(String filename)
+private void cargarPeliculas(String filename)
 {
-	ArrayList<Pelicula> films = new ArrayList<Pelicula>();
+	ListaPeliculas films = new ListaPeliculas();
 	
 	 try {
 	      File myObj = new File(filename);
@@ -31,19 +32,19 @@ private ArrayList<Pelicula> cargarPeliculas(String filename)
 		      
 		    Pelicula film = new Pelicula(p[0],Integer.parseInt(p[1]), Float.parseFloat(p[2]), Integer.parseInt(p[3]));
 	     
-		    films.add(film);
+		    films.getPeliculas().add(film);
 	      }
 	      myReader.close();
 	    } catch (FileNotFoundException e) {
 	      System.out.println("An error occurred.");
 	      e.printStackTrace();
 	    }
-	return films;
+	this.listaPeliculas = films;
 }
 
-private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
+private void cargarInterpretes(ListaPeliculas listaPeliculas)
 {
-	ArrayList<Interprete> casts = new ArrayList<Interprete>();
+	ListaInterpretes casts = new ListaInterpretes();
 	
 	 try {
 	      File myObj = new File("C:\\Users\\Eneko\\Desktop\\Proyecto EDA\\EVazquezIVilelaJNavarlaz\\src\\fase1./cast_tiny.txt");
@@ -56,16 +57,21 @@ private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
 	        String[] c2 = c1[1].split("\\|\\|");
 	      
 	        // get cast films
-	        ArrayList<Pelicula> castFilms = new ArrayList<Pelicula>();
+	        ListaPeliculas castFilms = new ListaPeliculas();
 	        for (int i = 0; i<c2.length; i++)
 	        {
-	        	Pelicula p = listaPeliculas.getPelicula(c2[i]);
-	        	castFilms.add(p);
+	        	Pelicula p = listaPeliculas.BuscarPelicula(c2[i]);
+	        	castFilms.getPeliculas().add(p);
 	        }
 	            
-		    Interprete cast = new Interprete(c1[0], castFilms);
-	     
-		    casts.add(cast);
+		    Interprete cast = new Interprete(c1[0], castFilms); 
+		    casts.getInterpretes().add(cast);
+		    
+		    //add cast to films
+		    for (Pelicula p : castFilms.getPeliculas())
+		    {
+		    	p.getInterpretes().add(cast);
+		    } 
 	      }
 	      myReader.close();
 	    } catch (FileNotFoundException e) {
@@ -74,18 +80,18 @@ private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
 	    }
 	 
 	// sort arraylist by cast name
-	Collections.sort(casts, new Comparator<Interprete>(){
+	Collections.sort(casts.getInterpretes(), new Comparator<Interprete>(){
 	    public int compare(Interprete i1, Interprete i2) {
 	        return i1.getNombre().compareToIgnoreCase(i2.getNombre());
 	    }
 	});
 	 
-	return casts;
+	this.listaInterpretes = casts;
 }
 
 	public void imprimirInfoPelicula(String titulo)
 	{
-		Pelicula p = listaPeliculas.getPelicula(titulo);
+		Pelicula p = listaPeliculas.BuscarPelicula(titulo);
 		
 		if (p != null)
 		{
@@ -94,7 +100,12 @@ private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
 			System.out.println("Año: " + p.getAno());
 			System.out.println("Rating: " + p.getRating());
 			System.out.println("Num. votos: " + p.getNumVotos());
-			System.out.println("Total de intérpretes de la película: " + "//TODO");
+			System.out.println("Total de intérpretes de la película: " + p.getInterpretes().size() + "");
+			
+			for (Interprete i : p.getInterpretes())
+			{
+				System.out.println("   * " + i);
+			}
 			
 			
 			System.out.println("\n\n");
@@ -114,8 +125,8 @@ private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
 		{
 			System.out.println("Nombre: " + in.getNombre());
 			System.out.println("Rating: " + in.calcularRating());
-			System.out.println("Total de películas del intérprete: " + in.getPeliculas().size());
-			for (Pelicula p : in.getPeliculas())
+			System.out.println("Total de películas del intérprete: " + in.getPeliculas().getPeliculas().size());
+			for (Pelicula p : in.getPeliculas().getPeliculas())
 			{
 				System.out.println("     * " + p.getTitulo());
 			}
@@ -132,11 +143,11 @@ private ArrayList<Interprete> cargarInterpretes(ListaPeliculas listaPeliculas)
 
 
 
-public void addVoto(String titulo, float voto)  //AnadirVoto 
+public void AnadirVoto(String titulo, float voto)  //AnadirVoto 
 {
-	Pelicula p = listaPeliculas.getPelicula(titulo);
+	Pelicula p = listaPeliculas.BuscarPelicula(titulo);
 	
-	p.addVoto(voto); // if the vote is valid or not, is decided on this function
+	p.AnadirVoto(voto); // if the vote is valid or not, is decided on this function
 }
 
 }

@@ -1,5 +1,6 @@
 package fase1;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Pelicula implements Comparable<Pelicula>{
@@ -7,6 +8,7 @@ public class Pelicula implements Comparable<Pelicula>{
 	int ano;
 	float rating;
 	int numVotos;
+	ArrayList<Interprete> interpretes;
 	
 	public Pelicula(String titulo, int ano, float rating, int numVotos) {
 		super();
@@ -14,12 +16,19 @@ public class Pelicula implements Comparable<Pelicula>{
 		this.ano = ano;
 		this.rating = rating;
 		this.numVotos = numVotos;
+		this.interpretes = new ArrayList<Interprete>();
 	}
 	public Pelicula ()
 	{
 		super();
 	}
 
+	public ArrayList<Interprete> getInterpretes() {
+		return interpretes;
+	}
+	public void setInterpretes(ArrayList<Interprete> interpretes) {
+		this.interpretes = interpretes;
+	}
 	public String getTitulo() {
 		return titulo;
 	}
@@ -57,23 +66,21 @@ public class Pelicula implements Comparable<Pelicula>{
 		return this.getTitulo();
 	}
 	
-	public void addInterprete(Interprete inter) // anadirInterprete //TODO //DUDA los intérpretes tienen que estar en orden alfabético???
-	{
-		
-	}
 	
-	public void addVoto (float voto) //anadirVoto 
+	public void AnadirVoto (float voto) //anadirVoto 
 	{
 		if (voto < 0 || voto > 10) { System.out.println("VOTO NO VÁLIDO"); return; }
 		if (this.getRating() >= 0) // with valid vote
 		{
 			this.setRating( (this.getRating() * this.getNumVotos() + voto) / (this.getNumVotos()+1) );
+			this.setNumVotos(this.getNumVotos() + 1);
 		}
 		else // with invalid vote (-1)
 		{
-			
+			this.setRating( voto );
+			this.setNumVotos(1);
 		}
-		this.setNumVotos(this.getNumVotos() + 1);
+		
 	}
 	
 	@Override

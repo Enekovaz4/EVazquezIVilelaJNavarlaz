@@ -16,6 +16,10 @@ public class ListaPeliculas {
 		super();
 		this.peliculas = films;
 	}
+	public ListaPeliculas() {
+		super();
+		this.peliculas = new ArrayList<Pelicula>();
+	}
 
 	public ArrayList<Pelicula> getPeliculas() {
 		return peliculas;
@@ -33,12 +37,12 @@ public class ListaPeliculas {
 		return "Lista Peliculas --> " + peliculas.size() + " películas."; 
 	}
 	
-	public Pelicula getPelicula (int index)
+	public Pelicula BuscarPelicula (int index)
 	{
 		return this.peliculas.get(index);
 	}
 
-	public Pelicula getPelicula(String filmToSearch) { // BuscarPelicula(String titulo)
+	public Pelicula BuscarPelicula(String filmToSearch) { // BuscarPelicula(String titulo)
 		int l = 0;
 		int r = this.peliculas.size() - 1;
 		int m = (int)((l + r) / 2);
@@ -66,7 +70,7 @@ public class ListaPeliculas {
 		return null;
 	}
 	
-	public void addPelicula(Pelicula p)
+	public void AnadirPelicula(Pelicula p)
 	{
 		this.peliculas.add(p); // add film to the arraylist
 		
