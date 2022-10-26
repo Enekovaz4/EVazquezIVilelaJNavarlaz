@@ -47,7 +47,7 @@ private void cargarInterpretes(ListaPeliculas listaPeliculas)
 	ListaInterpretes casts = new ListaInterpretes();
 	
 	 try {
-	      File myObj = new File("C:\\Users\\Eneko\\Desktop\\Proyecto EDA\\EVazquezIVilelaJNavarlaz\\src\\fase1./cast_tiny.txt");
+	      File myObj = new File("./src/fase1/cast_tiny.txt");
 	      Scanner myReader = new Scanner(myObj);
 	      
 	      

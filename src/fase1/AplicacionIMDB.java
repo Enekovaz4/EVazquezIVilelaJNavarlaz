@@ -11,7 +11,7 @@ public class AplicacionIMDB {
 
           //TO DO: ...
 		// CARGAR DATOS (PELICULAS E INTERPRETES)
-		CatalogoIMDB catalogo = new CatalogoIMDB("C:\\Users\\Eneko\\Desktop\\Proyecto EDA\\EVazquezIVilelaJNavarlaz\\src\\fase1./films_tiny.txt");
+		CatalogoIMDB catalogo = new CatalogoIMDB("./src/fase1/films_tiny.txt");
 		System.out.println(catalogo.listaInterpretes);
 		System.out.println(catalogo.listaPeliculas);
 		
